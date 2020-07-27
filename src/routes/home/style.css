@@ -1,7 +1,6 @@
 .video {
     width: 100%;
     filter: contrast(130%) grayscale(50%);
-
     object-fit: cover;
     box-sizing: border-box;
     z-index: 0;
@@ -14,7 +13,6 @@
 .video-wrapper::after {
     content: "";
     display: block;
-
     background: linear-gradient(
         179.71deg,
         rgba(0, 0, 0, 0) 89.46%,
