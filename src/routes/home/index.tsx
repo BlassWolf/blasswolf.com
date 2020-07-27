@@ -6,7 +6,14 @@ const Home: FunctionalComponent = () => {
     return (
         <div class={style.home}>
             <img src={logo} alt="BlassWolf" class={style.logo} />
-            <video class={style.video} src={bg} loop autoPlay muted />
+            <video
+                class={style.video}
+                src={bg}
+                loop
+                autoPlay
+                muted
+                playsInline
+            />
         </div>
     );
 };
