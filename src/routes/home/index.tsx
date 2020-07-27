@@ -41,8 +41,8 @@ const Home: FunctionalComponent = () => {
                     </button>
                 </form>
                 <p>
-                    Join intellectual reading community and get access to high
-                    quality stories and audiobooks. Subscribe to updates and be
+                    Join an intellectual horror literature community and get access to high
+                    quality writen stories and audiobooks based on real life places and events. Subscribe to updates and be
                     the first to know when its live.
                 </p>
             </div>
