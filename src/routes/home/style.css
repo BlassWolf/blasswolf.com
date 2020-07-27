@@ -1,0 +1,21 @@
+.video {
+    width: 100vw;
+    filter: contrast(130%) grayscale(50%);
+    height: 100vh;
+    object-fit: cover;
+    box-sizing: border-box;
+    z-index: 0;
+}
+.logo {
+    position: absolute;
+    z-index: 1;
+    left: 50%;
+    top: 10%;
+    transform: translateX(-50%);
+    max-width: 80%;
+}
+.home {
+    overflow: hidden;
+    height: 100%;
+    width: 100%;
+}
