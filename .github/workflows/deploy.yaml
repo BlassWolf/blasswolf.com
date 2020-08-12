@@ -24,5 +24,5 @@ jobs:
         KEY: ${{ secrets.SSH_KEY }}
       with:
         source: "./build/*"
-        target: "/home/users/${{ secrets.USERNAME }}/"
-    - run: rsync -va --delete-after /home/users/${{ secrets.USERNAME }}/build/ /var/www/blasswolf.com/html  
+        target: "/home/${{ secrets.USERNAME }}/"
+    - run: rsync -va --delete-after /home/${{ secrets.USERNAME }}/build/ /var/www/blasswolf.com/html  
