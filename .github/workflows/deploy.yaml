@@ -25,4 +25,4 @@ jobs:
       with:
         source: "./build/*"
         target: "/home/${{ secrets.USERNAME }}/"
-    - run: rsync -va --delete-after /home/${{ secrets.USERNAME }}/build/ /var/www/blasswolf.com/html  
+    - run: rsync -va --delete-after /home/${{ secrets.USERNAME }}/build /var/www/blasswolf.com/html  
