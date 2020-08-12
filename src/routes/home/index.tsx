@@ -66,7 +66,7 @@ const Home: FunctionalComponent = () => {
         </p>
 
         <p>
-          The content that will be feature consists, as mentioned above, of horror stories and stories focused on eerie corners and events of our world, as well as the theory behind such occurrences, being it natural causes, paranormal or supernatural, the website will also feature a section where members will be able to interact with each other and discuss their theories, beliefs, experiences, etc...
+          The content that will be featured consists, as mentioned above, of horror stories and stories focused on eerie corners and events of our world, as well as the theory behind such occurrences, being it natural causes, paranormal or supernatural, the website will also feature a section where members will be able to interact with each other and discuss their theories, beliefs, experiences, etc...
         </p>
 
         <p>
