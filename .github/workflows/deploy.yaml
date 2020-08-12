@@ -25,7 +25,7 @@ jobs:
       with:
         source: "./build/*"
         target: "/home/${{ secrets.USERNAME }}/"
-    - name: Executing remote  command
+    - name: Sync files
       uses: appleboy/ssh-action@master
       with:
         host: ${{ secrets.HOST }}
