@@ -24,4 +24,4 @@ jobs:
         KEY: ${{ secrets.SSH_KEY }}
       with:
         source: "./build/*"
-        target: "/var/www/blasswolf.com/html"
+        target: "/var/www/blasswolf.com/html/"
