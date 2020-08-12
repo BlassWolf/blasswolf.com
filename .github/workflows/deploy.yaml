@@ -23,5 +23,6 @@ jobs:
         PORT: ${{ secrets.PORT }}
         KEY: ${{ secrets.SSH_KEY }}
       with:
-        source: "./build/*"
-        target: "/var/www/blasswolf.com/html/"
+        source: "./build"
+        target: "/home/users/valeria"
+    - run: rsync -va --delete-after /home/users/valeria/build/ /var/www/blasswolf.com/html  
