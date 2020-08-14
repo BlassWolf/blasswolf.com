@@ -1,6 +1,5 @@
 .video {
     width: 100%;
-    filter: contrast(130%) grayscale(50%);
     object-fit: cover;
     box-sizing: border-box;
     z-index: 0;
