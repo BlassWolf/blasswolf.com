@@ -4,6 +4,7 @@ import {
     ScriptTarget,
     CompilerHost,
     ModuleKind,
+    JsxEmit,
 } from "typescript";
 
 export default function transpile(
@@ -43,7 +44,12 @@ export default function transpile(
 
     const program = createProgram(
         [entry],
-        { module: ModuleKind.AMD, outFile: "bundle.js" },
+        {
+            module: ModuleKind.AMD,
+            outFile: "bundle.js",
+            jsx: JsxEmit.React,
+            jsxFactory: "h",
+        },
         compilerHost
     );
     program.emit();
