@@ -1,3 +1,6 @@
+/**
+ * Non-minified version for reference
+ */
 (function () {
     var modules = {};
     window.define = function define(name, deps, fn) {

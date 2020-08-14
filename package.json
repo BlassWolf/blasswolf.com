@@ -4,6 +4,8 @@
     "version": "0.0.0",
     "license": "MIT",
     "dependencies": {
+        "emotion": "^10.0.27",
+        "emotion-server": "^10.0.27",
         "express": "^4.17.1",
         "graphql": "^15.3.0",
         "htm": "^3.0.4",
