@@ -1,7 +1,6 @@
 import render from "preact-render-to-string";
 import { h } from "preact";
 import { Request, Response, Express } from "express";
-import { minify } from "uglify-js";
 import { extractCritical } from "emotion-server";
 import path from "path";
 import App from "./App";
@@ -10,13 +9,12 @@ import transpile from "../core/transpile";
 
 export default function webServerMiddleware(app: Express) {
     const assets = loadFiles(path.resolve(process.cwd(), "public"));
-    const pubFiles = loadFiles(path.resolve(process.cwd(), "dist"));
-
+    const files = loadFiles(path.resolve(__dirname));
+    const transpiled = transpile(files, "client.ts");
+    console.log(transpiled);
     app.use("/public", (req, res) => {
         const filename = req.path.replace(/^\//, "");
-        const file = pubFiles.has(filename)
-            ? pubFiles.get(filename)
-            : assets.get(filename);
+        const file = assets.get(filename);
         if (typeof file === "undefined") return res.sendStatus(404);
         res.contentType(file.type);
         return res.send(file.content);
