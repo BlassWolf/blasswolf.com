@@ -1,44 +1,33 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+#Greetings
 
-## Available Scripts
+My name is Blass Wolf, and I am the person responsible for this
+website and its content. many of you reached out to me on social media
+looking for answers as to what exactly this website is about and what
+kind of content it will feature, first and foremost I would like to
+say that social media isn't the ideal place to reach me, the best and
+only way to do so is through this website, which soon will feature a
+way in which you can contact me directly, expressing your doubts,
+suggestion and whatever else you might have in mind regarding this
+project and how you can interact with it, as well as learn how you can
+help shape the future of our publications and tools.
 
-In the project directory, you can run:
+As for the first question: this website is a space to read and discuss
+horror stories of my authorship, and also the real-life events and
+places that inspired those stories, delving deep into personal
+beliefs, occultism, parapsychology, regional legends, folklore,
+unexplained phenomena, personal experiences and everything else under
+the definition of paranormal and ultimately supernatural.
 
-### `yarn start`
+The content that will be featured consists, as mentioned above, of
+horror stories and stories focused on eerie corners and events of our
+world, as well as the theory behind such occurrences, being it natural
+causes, paranormal or supernatural, the website will also feature a
+section where members will be able to interact with each other and
+discuss their theories, beliefs, experiences, etc...
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+As for now, you can subscribe to the website newsletter and be
+informed as soon as the first publication is available.
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+thank you for your interest and welcome to the pack -
 
-### `yarn test`
-
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `yarn build`
-
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `yarn eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+    B.Wolf
