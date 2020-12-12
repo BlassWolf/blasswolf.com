@@ -24,7 +24,7 @@ const Home: FunctionalComponent = () => {
                     <h1 class={style.h1}>Read the next story first</h1>
                     <p style={{ color: "rgba(255,255,255,0.5)" }}>
                         Join an intellectual horror literature community and get
-                        access to high quality writen stories and audiobooks
+                        access to high quality written stories and audiobooks
                         based on real life places and events. Subscribe to
                         updates and be the first to know when its live.
                     </p>
