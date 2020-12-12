@@ -35,4 +35,4 @@ jobs:
         USERNAME: ${{ secrets.USERNAME }}
         PORT: ${{ secrets.PORT }}
         KEY: ${{ secrets.SSH_KEY }}    
-        script: rsync -va --delete-after /home/${{ secrets.USERNAME }}/build/ /var/www/blasswolf.com/html/
+        script: rsync -va --delete-after /home/${{ secrets.USERNAME }}/build/ /var/www/thewolfsigil.com/html/

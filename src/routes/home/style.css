@@ -1,10 +1,10 @@
 .video {
     width: 100%;
     object-fit: cover;
+    object-position: 0% 100%;
     box-sizing: border-box;
     z-index: 0;
-    min-height: 456px;
-    max-height: 792px;
+    height: 456px;
 }
 .video-wrapper {
     position: relative;
@@ -50,7 +50,7 @@
 .header {
     font-size: 32px;
     line-height: 48px;
-    color: rgba(255, 255, 255, 0.5);
+    color: rgba(255, 255, 255, 0.9);
     text-align: center;
     margin: 0;
     font-weight: normal;
@@ -59,6 +59,7 @@
     font-size: 32px;
     line-height: 48px;
     margin: 0;
+    font-family: "Noto Sans", sans-serif;
     font-weight: bold;
     text-align: center;
     color: white;
@@ -79,19 +80,19 @@
 }
 
 .input {
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    background-color: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.9);
+    background-color: transparent;
     line-height: 48px;
-
     height: 60px;
-    padding: 6px 16px;
+    padding: 6px 24px;
     border-bottom-width: 0;
     border-top-left-radius: 8px;
     border-bottom-left-radius: 0;
     border-top-right-radius: 8px;
     border-bottom-right-radius: 0;
+
     color: white;
-    font-size: 24px;
+    font-size: 16px;
     outline: none;
     box-shadow: none;
     transition: 300ms ease;
@@ -105,37 +106,44 @@
         border-bottom-left-radius: 8px;
         border-top-right-radius: 0;
         border-bottom-right-radius: 0;
+        border-right: none;
         text-align: left;
         min-width: 350px;
+        margin-right: -2px;
     }
 }
 .input:focus {
     outline: none;
     box-shadow: none;
-    background-color: rgba(255, 255, 255, 0.08);
+    background-color: rgba(255, 255, 255, 0.04);
     transition: 300ms ease;
 }
+
 .button {
     padding: 6px 32px;
-    background-color: #942e39;
+    background-color: transparent;
     font-weight: bold;
+    text-transform: uppercase;
     border: none;
     color: white;
     line-height: 48px;
     height: 60px;
-    font-size: 20px;
+    font-size: 14px;
+    font-family: "Noto Serif", serif;
     border-top-left-radius: 0;
     border-bottom-left-radius: 8px;
     border-top-right-radius: 0;
     border-bottom-right-radius: 8px;
     cursor: pointer;
     transition: 300ms ease;
+    border: 1px solid white;
 }
 .button:hover {
     outline: none;
     box-shadow: none;
-    background-color: #a63446;
+    background-color: white;
     transition: 300ms ease;
+    color: black;
 }
 
 @media (min-width: 600px) {
