@@ -2,8 +2,12 @@ import { FunctionalComponent, h } from "preact";
 import { Route, Router, RouterOnChangeArgs } from "preact-router";
 
 import Home from "../routes/home";
+import Journal from "../routes/journal";
+import Entry from "../routes/journal/entry";
 
 import NotFoundPage from "../routes/notfound";
+import Footer from "./footer";
+import Header from "./header";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 if ((module as any).hot) {
@@ -18,23 +22,18 @@ const App: FunctionalComponent = () => {
     };
 
     return (
-        <div id="app">
-            <Router onChange={handleRoute}>
-                <Route path="/" component={Home} />
-
-                <NotFoundPage default />
-            </Router>
-            <footer
-                style={{
-                    padding: "1rem",
-                    color: "rgba(255,255,255,0.25)",
-                    borderTop: "1px solid rgba(255,255,255,0.08)",
-                    fontSize: 12
-                }}
-            >
-                &copy;TheWolfSigil, 2020
-            </footer>
-        </div>
+        <>
+            <Header />
+            <main>
+                <Router onChange={handleRoute}>
+                    <Route path="/journal/:entry" component={Entry} />
+                    <Route path="/journal" component={Journal} />
+                    <Route path="/" component={Home} />
+                    <NotFoundPage default />
+                </Router>
+            </main>
+            <Footer />
+        </>
     );
 };
 
