@@ -3,10 +3,12 @@ import { mergeResolvers, mergeTypeDefs } from "@graphql-tools/merge";
 
 import * as core from "./core";
 import * as journal from "./journal";
+import * as pages from "./pages";
 
 const { typeDefs, resolvers, directiveResolvers, dataSources } = ([
   core,
   journal,
+  pages,
 ] as any).reduce(
   (a, c) => {
     if (c.typeDefs) a.typeDefs.push(c.typeDefs);

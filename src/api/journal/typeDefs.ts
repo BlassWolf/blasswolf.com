@@ -26,13 +26,6 @@ export default gql`
     alias: String
   }
 
-  input ImageInput {
-    url: String!
-    width: Int!
-    height: Int!
-    alt: String
-  }
-
   type JournalPage {
     items: [JournalEntry]
     nextOffset: Int

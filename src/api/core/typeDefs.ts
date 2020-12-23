@@ -13,4 +13,17 @@ export default gql`
     item: String!
     action: PermittedAction!
   ) on FIELD_DEFINITION
+
+  type Image {
+    url: String!
+    width: Int!
+    height: Int!
+    alt: String
+  }
+  input ImageInput {
+    url: String!
+    width: Int!
+    height: Int!
+    alt: String
+  }
 `;
