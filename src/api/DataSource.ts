@@ -1,4 +1,4 @@
-import { GraphQLContext, ListParams } from "./types";
+import { APIContext, ListParams } from "./types";
 import { v4 as uuidv4 } from "uuid";
 
 export default class DataSource<
@@ -12,7 +12,7 @@ export default class DataSource<
   static collection: string = "items";
   static prefix: string = "itm";
 
-  constructor(public context: GraphQLContext) {
+  constructor(public context: Partial<APIContext>) {
     this.context = context;
   }
 
@@ -99,7 +99,7 @@ export default class DataSource<
         offset,
         limit
       )
-      .then(this.load.bind(this))
+      .then((ids) => this.load(ids))
       .then((items) => ({
         items,
         nextOffset: items.length ? offset + limit : null,

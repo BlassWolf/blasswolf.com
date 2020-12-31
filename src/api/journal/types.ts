@@ -1,10 +1,8 @@
 import Journal from "./Journal";
 
-export type JournalEntry = {
-  id: string;
+export type JournalInput = {
   title: string;
   content: string;
-  createdAt: number;
   images?: {
     url: string;
     width: number;
@@ -13,7 +11,12 @@ export type JournalEntry = {
   }[];
   description?: string;
   alias?: string;
+};
+
+export type JournalEntry = JournalInput & {
+  id: string;
   updatedAt?: number;
+  createdAt: number;
 };
 
 export type JournalContext = {

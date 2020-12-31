@@ -1,62 +1,58 @@
 import { IncomingMessage, ServerResponse } from "http";
-import { execute } from "graphql";
+import querystring from "querystring";
 import context from "./context";
-import schema, { dataSources } from "./schema";
-import { gql } from "gql";
+import core from "./core";
+import DataSource from "./DataSource";
+import { url as baseUrl } from "../config";
+import routeRequest from "./routeRequest";
+import { resolve } from "path";
+import { reject } from "ramda";
 
-export default function api(req: IncomingMessage, res: ServerResponse) {
-  if (req.method?.toUpperCase() !== "POST") {
-    res.statusCode = 405;
-    res.write("Method not allowed");
-    return res.end();
-  }
-  let body = "";
-  req.on("data", (chunk) => {
-    body += chunk.toString();
-  });
-  req.on("error", () => {
-    res.end();
-  });
-  req.on("end", async () => {
-    let payload;
-    try {
-      payload = JSON.parse(body);
-    } catch (error) {
-      console.log(error);
-      res.statusCode = 400;
-      res.write("Incorrect JSON");
-      return res.end();
-    }
-    try {
-      const { query, operationName, variables } = payload;
-      const document = gql`
-        ${query}
-      `;
-      const contextValue: any = { ...context, req, res };
+const dataSources: Record<
+  keyof typeof core.dataSources,
+  DataSource<any>
+> = {} as any;
 
-      for (let source in dataSources) {
-        const DS = dataSources[source];
-        contextValue[source] = new DS(context);
+for (let dataSource in core.dataSources) {
+  dataSources[dataSource] = new core.dataSources[dataSource](context);
+}
+
+export default async function api(req: IncomingMessage, res: ServerResponse) {
+  try {
+    const method = req.method?.toUpperCase();
+    const url = new URL(req.url, baseUrl);
+    const ctx = { ...context, ...dataSources };
+    const resolver = routeRequest(url, method, core.resolvers);
+    const params = url.search ? querystring.parse(url.search) : {};
+    let input;
+    if (["POST", "PATCH"].includes(method)) {
+      input = await body(req);
+      if (req.headers["content-type"] === "application/json") {
+        input = JSON.parse(input);
       }
-
-      const result = await execute({
-        schema,
-        document,
-        contextValue,
-        operationName,
-        variableValues: variables,
-      });
-
-      const response = JSON.stringify(result);
-      res.setHeader("Content-Type", "appplication/json");
-      res.setHeader("Content-Length", response.length);
-      res.write(response);
-      return res.end();
-    } catch (error) {
-      console.log(error);
-      res.statusCode = 500;
-      res.write("Something went wrong");
-      return res.end();
     }
+    const response = await resolver({ ...params, input }, ctx);
+    res.statusCode = 200;
+    res.write(JSON.stringify(response));
+    res.end();
+  } catch (error) {
+    res.statusCode = "code" in error ? error.code : 500;
+    res.write(error.message);
+    res.end();
+  }
+}
+
+export function body(req: IncomingMessage) {
+  return new Promise((resolve, reject) => {
+    let body = "";
+    req.on("data", (chunk) => {
+      body += chunk.toString();
+    });
+    req.on("end", () => {
+      resolve(body);
+    });
+    req.on("error", (error) => {
+      reject(error);
+    });
   });
 }

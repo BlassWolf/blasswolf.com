@@ -32,11 +32,11 @@ describe("DataSource Integration Test", () => {
     expect(item).to.have.property("id");
     expect(item.id).to.match(/^itm_/);
     const list = await source.list();
-    expect(list).to.have.length(1);
-    expect(list[0]?.id).to.be.eq(item.id);
+    expect(list.items).to.have.length(1);
+    expect(list.items[0]?.id).to.be.eq(item.id);
     const deletion = await source.delete(item.id);
     expect(deletion).to.be.true;
-    expect(await source.list()).to.have.length(0);
+    expect(await (await source.list()).items).to.have.length(0);
     expect(await source.get(item.id)).to.be.null;
   });
 });
