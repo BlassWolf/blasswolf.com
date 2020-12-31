@@ -18,3 +18,9 @@ export class HTTPMethodNotAllowed extends HTTPError {
     super(405, `Allowed: ${methods.join(", ")}`);
   }
 }
+
+export class HTTPServerError extends HTTPError {
+  constructor(message?: string) {
+    super(500, message ?? "Internal Server Error");
+  }
+}

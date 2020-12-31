@@ -3,7 +3,18 @@ import DataSource from "./DataSource";
 
 export type MaybePromise<T> = Promise<T> | T;
 
-export type APIContext = typeof context;
+export type LogFunction = (...args: any) => void;
+
+export type APILogger = Record<"error" | "info" | "log" | "warn", LogFunction>;
+
+export type APIContext = typeof context & Record<string, DataSource<any>>;
+
+export type APIItem = {
+  id: string;
+  [key: string]: any;
+  createdAt: number;
+  updatedAt?: number;
+};
 
 export type APIResolver<P = any, C = any, R = any> = (
   params: P,

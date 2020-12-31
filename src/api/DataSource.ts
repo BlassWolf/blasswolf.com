@@ -1,14 +1,7 @@
-import { APIContext, ListParams } from "./types";
+import { APIContext, APIItem, ListParams } from "./types";
 import { v4 as uuidv4 } from "uuid";
 
-export default class DataSource<
-  T extends {
-    id: string;
-    [key: string]: any;
-    createdAt: number;
-    updatedAt?: number;
-  }
-> {
+export default class DataSource<T extends APIItem, I = Partial<T>> {
   static collection: string = "items";
   static prefix: string = "itm";
 
@@ -32,22 +25,37 @@ export default class DataSource<
     });
   }
 
-  set(id: string, item: T): Promise<T> {
-    const value = JSON.stringify({ ...item, id, updatedAt: Date.now() });
+  async set(id: string, item: I): Promise<T> {
+    const previous = await this.get(id);
+    const merged = previous
+      ? {
+          ...previous,
+          ...item,
+          id,
+          updatedAt: Date.now(),
+        }
+      : { id, ...item };
+
+    const value = JSON.stringify(merged);
     return new Promise((resolve, reject) =>
       this.context.redis
         .multi()
         .set(this.key(id), value)
-        .zadd(this.static.collection, item.createdAt.toString(), id)
+        .zadd(
+          this.static.collection,
+          (merged["createdAt"] ?? Date.now()).toString(),
+          id
+        )
         .exec((err) => {
           if (err) return reject(err);
-          resolve(item);
+          resolve(merged as T);
         })
     );
   }
-  create(item: Partial<T>) {
-    const id: string = item.id ?? `${this.static.prefix}_${uuidv4()}`;
-    return this.set(id, { ...item, id, createdAt: Date.now() } as T);
+  create(item: I) {
+    const id: string =
+      "id" in item ? item["id"] : `${this.static.prefix}_${uuidv4()}`;
+    return this.set(id, { ...item, id, createdAt: Date.now() });
   }
   delete(id: string): Promise<boolean> {
     return new Promise((resolve, reject) =>
