@@ -1,11 +1,11 @@
 import DataSource from "api/DataSource";
-import { JournalEntry, JournalInput } from "./types";
+import { Page, PageInput } from "./types";
 
-export default class Journal extends DataSource<JournalEntry> {
-  static collection: string = "journal";
-  static prefix: string = "jrn";
+export default class Pages extends DataSource<Page> {
+  static collection: string = "pages";
+  static prefix: string = "pg";
 
-  validate(input: JournalInput, newItem?: boolean) {
+  validate(input: PageInput, newItem?: boolean) {
     const errors = [];
     if (newItem) {
       if (!input.title)

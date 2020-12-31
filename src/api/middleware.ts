@@ -1,8 +1,9 @@
 import { IncomingMessage, ServerResponse } from "http";
 import querystring from "querystring";
 import { Readable } from "stream";
+import { IncomingForm } from "formidable";
 import { url as baseUrl } from "../config";
-import { HTTPServerError } from "./errors";
+import { HTTPNotFound } from "./errors";
 import routeRequest from "./routeRequest";
 import { APILogger, APIResolvers } from "./types";
 
@@ -13,41 +14,67 @@ export default function api<T extends { log: APILogger }>(
   const log = context.log;
   return async (req: IncomingMessage, res: ServerResponse) => {
     try {
+      res.setHeader("Content-Type", "application/json");
       const method = req.method?.toUpperCase();
       const url = new URL(req.url, baseUrl);
       const resolver = routeRequest(url, method, resolvers);
-      const params = url.search
-        ? querystring.parse(url.search.replace(/^\?/, ""))
-        : {};
+      const params = {};
+      for (const [key, value] of url.searchParams) {
+        params[key] = value;
+      }
       let input;
-      if (["POST", "PATCH"].includes(method)) {
-        input = await body(req);
-        if (req.headers["content-type"] === "application/json") {
-          input = JSON.parse(input);
+      let files;
+
+      if (["POST", "PATCH", "PUT"].includes(method)) {
+        if (req.headers["content-type"].startsWith("multipart/form-data")) {
+          input = await new Promise((resolve, reject) => {
+            new IncomingForm({ multiples: true } as any).parse(
+              req,
+              (err, fields, incomingFiles) => {
+                if (err) return reject(err);
+                files = incomingFiles;
+                resolve(fields);
+              }
+            );
+          });
+        } else {
+          input = await body(req);
+          switch (req.headers["content-type"]) {
+            case "application/json": {
+              input = JSON.parse(input);
+              break;
+            }
+            case "application/x-www-form-urlencoded":
+              input = querystring.parse(input);
+              break;
+          }
         }
       }
-      const response = await resolver({ ...params, input }, context);
+      const response = await resolver({ ...params, input, files }, context);
       const sendResponse = (code: number, response: object) => {
         res.statusCode = code;
-        res.setHeader("Content-Type", "application/json");
         res.write(JSON.stringify(response));
         res.end();
       };
 
-      if (typeof response !== "object") {
-        log.error(`Received non-object response`, { url, method });
-        throw new HTTPServerError();
+      if (!response) {
+        throw new HTTPNotFound();
       }
       const code = "code" in response ? response.code : 200;
       return sendResponse(code, response);
     } catch (error) {
       res.statusCode = "code" in error ? error.code : 500;
+      let message = error.message;
       if (res.statusCode >= 500) {
         log.error(error);
-        res.write("Internal Server Error");
-      } else {
-        res.write(error.message);
+        message = "Internal Server Error";
       }
+      res.write(
+        JSON.stringify({
+          error: message,
+          code: res.statusCode,
+        })
+      );
       res.end();
     }
   };

@@ -1,6 +1,15 @@
+import makeCRUD from "api/makeCRUD";
+import { APIContext } from "api/types";
+import { JournalContext, JournalEntry, JournalInput } from "./types";
+
 import Journal from "./Journal";
 
-export { default as resolvers } from "./resolvers";
 export const dataSources = {
   journal: Journal,
 };
+
+export const resolvers = makeCRUD<
+  APIContext & JournalContext,
+  JournalEntry,
+  JournalInput
+>("entry", "entries", "journal");

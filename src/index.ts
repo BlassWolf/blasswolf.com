@@ -1,7 +1,7 @@
 import { Server } from "http";
 import { port, paths } from "config";
 
-import api from "api/middleware";
+import api from "./api";
 import web from "web/middleware";
 import admin from "admin/middleware";
 

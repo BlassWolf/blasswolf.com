@@ -26,10 +26,17 @@ export type APIResolvers = Record<
   Partial<Record<"GET" | "POST" | "PATCH" | "DELETE", APIResolver>>
 >;
 
+export type APIErrorResponse = {
+  errors: Array<InputError>;
+  code?: number;
+};
+
 export type APIModule = {
   dataSources: Record<string, DataSource<any>>;
   resolvers;
 };
+
+export type InputError = { name: string; message: string };
 
 export type ListParams = {
   limit?: number;

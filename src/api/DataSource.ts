@@ -1,5 +1,13 @@
-import { APIContext, APIItem, ListParams } from "./types";
+import {
+  APIContext,
+  APIErrorResponse,
+  APIItem,
+  InputError,
+  ListParams,
+  MaybePromise,
+} from "./types";
 import { v4 as uuidv4 } from "uuid";
+import { HTTPNotFound } from "./errors";
 
 export default class DataSource<T extends APIItem, I = Partial<T>> {
   static collection: string = "items";
@@ -18,6 +26,10 @@ export default class DataSource<T extends APIItem, I = Partial<T>> {
     return `${this.static.collection}::${id}`;
   }
 
+  validate(input: I, newItem?: boolean): MaybePromise<Array<InputError>> {
+    return [];
+  }
+
   get(id: string) {
     return this.context.redis.get(this.key(id)).then((value) => {
       if (!value) return null;
@@ -25,8 +37,15 @@ export default class DataSource<T extends APIItem, I = Partial<T>> {
     });
   }
 
-  async set(id: string, item: I): Promise<T> {
+  async set(
+    id: string,
+    item: I,
+    upsert: boolean = false
+  ): Promise<T | APIErrorResponse> {
+    const errors = await this.validate(item);
+    if (errors?.length) return { errors, code: 400 };
     const previous = await this.get(id);
+    if (!upsert && !previous) throw new HTTPNotFound();
     const merged = previous
       ? {
           ...previous,
@@ -52,10 +71,12 @@ export default class DataSource<T extends APIItem, I = Partial<T>> {
         })
     );
   }
-  create(item: I) {
+  async create(item: I) {
+    const errors = await this.validate(item, true);
+    if (errors?.length) return { errors, code: 400 };
     const id: string =
       "id" in item ? item["id"] : `${this.static.prefix}_${uuidv4()}`;
-    return this.set(id, { ...item, id, createdAt: Date.now() });
+    return this.set(id, { ...item, id, createdAt: Date.now() }, true);
   }
   delete(id: string): Promise<boolean> {
     return new Promise((resolve, reject) =>
@@ -96,8 +117,8 @@ export default class DataSource<T extends APIItem, I = Partial<T>> {
   list(params: ListParams = {}) {
     const min = params.after ?? "-inf";
     const max = params.before ?? "+inf";
-    const limit = params.limit ?? 10;
-    const offset = params.offset ?? 0;
+    const limit = params.limit || 10;
+    const offset = params.offset || 0;
     return this.context.redis
       .zrevrangebyscore(
         this.static.collection,
@@ -110,7 +131,7 @@ export default class DataSource<T extends APIItem, I = Partial<T>> {
       .then((ids) => this.load(ids))
       .then((items) => ({
         items,
-        nextOffset: items.length ? offset + limit : null,
+        nextOffset: items.length ? offset * 1 + limit * 1 : null,
       }));
   }
 }

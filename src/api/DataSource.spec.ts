@@ -1,6 +1,7 @@
 import { describe, it } from "mocha";
 import { expect } from "chai";
 import DataSource from "./DataSource";
+import { APIItem } from "./types";
 const Redis = require("ioredis-mock");
 
 describe("DataSource Integration Test", () => {
@@ -25,10 +26,10 @@ describe("DataSource Integration Test", () => {
     const rnd = Math.random();
     const redis = new Redis();
     const source = new DataSource({ redis });
-    const item = await source.create({
+    const item = (await source.create({
       username: "superman" + rnd,
       email: "clark@daily.planet",
-    });
+    })) as APIItem;
     expect(item).to.have.property("id");
     expect(item.id).to.match(/^itm_/);
     const list = await source.list();

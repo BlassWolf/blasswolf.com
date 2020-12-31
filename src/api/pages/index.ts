@@ -1,5 +1,13 @@
 import Pages from "./Pages";
-export { default as resolvers } from "./resolvers";
+import { PageContext, Page } from "./types";
+import makeCRUD from "api/makeCRUD";
+import { APIContext } from "api/types";
+
 export const dataSources = {
   pages: Pages,
 };
+
+export const resolvers = makeCRUD<APIContext & PageContext, Page>(
+  "page",
+  "pages"
+);

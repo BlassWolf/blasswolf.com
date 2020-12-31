@@ -1,3 +1,4 @@
+import { APIItem } from "api/types";
 import Journal from "./Journal";
 
 export type JournalInput = {
@@ -13,11 +14,7 @@ export type JournalInput = {
   alias?: string;
 };
 
-export type JournalEntry = JournalInput & {
-  id: string;
-  updatedAt?: number;
-  createdAt: number;
-};
+export type JournalEntry = JournalInput & APIItem;
 
 export type JournalContext = {
   journal: Journal;

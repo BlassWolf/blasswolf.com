@@ -1,10 +1,9 @@
+import { APIItem } from "api/types";
 import Pages from "./Pages";
 
-export type Page = {
-  id: string;
+export type PageInput = {
   title: string;
   content: string;
-  createdAt: number;
   images?: {
     url: string;
     width: number;
@@ -12,8 +11,9 @@ export type Page = {
     alt: string;
   }[];
   description?: string;
-  updatedAt?: number;
 };
+
+export type Page = APIItem & PageInput;
 
 export type PageContext = {
   pages: Pages;

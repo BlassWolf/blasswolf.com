@@ -5,7 +5,7 @@ export default function makeCRUD<
   C extends APIContext,
   T extends APIItem,
   I = any
->(item: string, items: string, source: keyof C): APIResolvers {
+>(item: string, items: string, source: keyof C = items): APIResolvers {
   const createItem = ({ input }: { input: I }, ctx: C) => {
     return (ctx[source] as DataSource<T>).create(input);
   };
