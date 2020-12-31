@@ -1,0 +1,81 @@
+body {
+  background-color: #050607;
+  color: white;
+  font-family: "Noto Sans", sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+h1 {
+  font-family: "Noto Serif", serif;
+  font-weight: 400;
+  font-size: 24px;
+  line-height: 36px;
+}
+
+.tws {
+  &-header {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    background-color: rgba(255, 255, 255, 0.04);
+    box-shadow: 2px 0 4px 6px rgba(0, 0, 0, 0.08);
+    padding: 12px;
+
+    &-name {
+      font-size: 28px;
+      line-height: 48px;
+      text-transform: uppercase;
+      font-family: "Noto Serif", serif;
+      letter-spacing: 3px;
+      text-align: center;
+      margin: auto;
+      @media (max-width: 359px) {
+        font-size: 24px;
+      }
+    }
+  }
+  &-sidebar {
+    background: #121212;
+    color: white;
+    padding: 12px;
+    display: flex;
+    flex-direction: column;
+    &-trigger {
+      font-size: 32px;
+      padding: 12px;
+      cursor: pointer;
+    }
+    &-header {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: flex-start;
+    }
+    &-wrapper {
+      margin-top: 36px;
+    }
+
+    &-nav {
+      list-style-type: none;
+      padding: 0;
+
+      &-item {
+        padding: 4px 0;
+        width: 240px;
+        text-align: center;
+        font-size: 24px;
+        line-height: 48px;
+        text-transform: uppercase;
+        font-family: "Noto Serif", serif;
+        letter-spacing: 3px;
+      }
+      &-link {
+        color: rgba(255, 255, 255, 0.9);
+        text-decoration: none;
+      }
+    }
+  }
+}

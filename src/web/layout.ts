@@ -1,12 +1,15 @@
 import { html } from "web/lib";
+import header from "./header";
+import styles from "./styles";
 
 export default (
   body,
   {
     title,
-    schema,
+
     style,
-  }: { title?: string; schema?: string; style?: string } = {}
+    scripts,
+  }: { title?: string; style?: string; scripts?: string } = {}
 ) => (url: URL) => html`<!DOCTYPE html>
   <html amp lang="en">
     <head>
@@ -14,8 +17,17 @@ export default (
       <script async src="https://cdn.ampproject.org/v0.js"></script>
       <title>${title ?? ""}</title>
       <link rel="canonical" href="${url.toString()}" />
+      <link
+        href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,400;0,700;1,400&family=Noto+Serif:ital,wght@0,400;0,700;1,400&display=swap"
+        rel="stylesheet"
+      />
       <meta name="viewport" content="width=device-width" />
-      ${schema ?? ""}
+      <script
+        async
+        custom-element="amp-sidebar"
+        src="https://cdn.ampproject.org/v0/amp-sidebar-0.1.js"
+      ></script>
+      ${scripts ?? ""}
       <style amp-boilerplate>
         body {
           -webkit-animation: -amp-start 8s steps(1, end) 0s 1 normal both;
@@ -75,19 +87,10 @@ export default (
         </style>
       </noscript>
       <style amp-custom>
-        /* any custom style goes here */
-        body {
-          background-color: black;
-          color: white;
-        }
-        ${style ?? ""}
+        ${styles(style)}
       </style>
     </head>
     <body>
-      <header class="headerbar">
-        <a href="/"> Home </a>
-        <div class="site-name">The Wolf Sigil</div>
-      </header>
-      ${body ?? ""}
+      ${header} ${body ?? ""}
     </body>
   </html>`;
